@@ -14,7 +14,7 @@ Use this history conversation if you need to look at previous conversation conte
 st.title("Chatbot AI")
 
 # User input for API key
-api_key = st.text_input("Enter your DeepSeek API Key:", type="password")
+api_key = st.text_input("Enter your API Key:", type="password")
 
 if api_key:
     # Initialize the OpenAI LLM with the provided API key
@@ -35,7 +35,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Accept user input
-if prompt := st.chat_input("Let's say: Hi Accurate!"):
+if prompt := st.chat_input("Let's say: Hi Celerates!"):
     messages_history = st.session_state.get("messages", [])[-10:]
     history = "\n".join([f'{msg["role"]}: {msg["content"]}' for msg in messages_history]) or " "
 
