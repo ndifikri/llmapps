@@ -1,6 +1,14 @@
 import streamlit as st
-
 from langchain_openai import ChatOpenAI
+
+def get_answer(prompt, history, llm):
+    fix_prompt = f"""You are helpful assistant. Your task is answer the question from user.
+User: {prompt}
+
+Use this history conversation if you need to look at previous conversation contexts:
+{history}"""
+    response = llm.invoke(fix_prompt)
+    return response
 
 # Set up the Streamlit app
 st.title("Chatbot AI")
@@ -39,18 +47,17 @@ if prompt := st.chat_input("Let's say: Hi Accurate!"):
     
     # Display assistant response in chat message container
     with st.chat_message("AI"):
-        response = llm.invoke(prompt)
+        response = get_answer(prompt, history, llm)
         answer = response.content
         st.markdown(answer)
     st.session_state.messages.append({"role": "AI", "content": answer})
 
-    with st.container():
-        st.write("**History Chat:**")
+    with st.expander("**History Chat:**"):
         st.code(history)
 
-    st.write("**Details:**")
     inp_tkn = response.response_metadata['token_usage']["prompt_tokens"]
     out_tkn = response.response_metadata['token_usage']["completion_tokens"]
     total_tkn = response.response_metadata['token_usage']["total_tokens"]
     model_n = response.response_metadata["model_name"]
-    st.code(f'input token : {inp_tkn}\noutput token : {out_tkn}\ntotal token : {total_tkn}\nmodel : {model_n}')
+    with st.expander("**Usage Details:**"):
+        st.code(f'input token : {inp_tkn}\noutput token : {out_tkn}\ntotal token : {total_tkn}\nmodel : {model_n}')
