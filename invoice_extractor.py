@@ -7,7 +7,7 @@ from openai import OpenAI
 # Function to convert image to base64
 def image_to_base64(image):
     buffered = io.BytesIO()
-    image.save(buffered, format="PNG")  # Save image to BytesIO object
+    image.save(buffered, format="JPEG")  # Save image to BytesIO object
     base64_encoded = base64.b64encode(buffered.getvalue()).decode('utf-8')
     return base64_encoded
 
@@ -28,7 +28,7 @@ if option == "Upload an Image":
         # Open the image using PIL
         image = Image.open(uploaded_file)
         # Display the uploaded image
-        st.image(image, caption='Uploaded Image.', use_column_width=True)
+        # st.image(image, caption='Uploaded Image.', use_column_width=True)
         # Convert the image to base64
         base64_string = image_to_base64(image)
 
