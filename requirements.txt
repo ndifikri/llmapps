@@ -1,3 +1,4 @@
 streamlit
-langchain-openai
+openai
 google-genai
+base64
