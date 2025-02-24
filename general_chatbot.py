@@ -1,13 +1,16 @@
 import streamlit as st
-from langchain_openai import ChatOpenAI
+from google import genai
 
-def get_answer(prompt, history, llm):
+def get_answer(prompt, history):
     fix_prompt = f"""You are helpful assistant. Your task is answer the question from user.
 User: {prompt}
 
 Use this history conversation if you need to look at previous conversation contexts:
 {history}"""
-    response = llm.invoke(fix_prompt)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=fix_prompt
+    )
     return response
 
 # Set up the Streamlit app
@@ -17,11 +20,7 @@ st.title("Chatbot AI")
 api_key = st.text_input("Enter your API Key:", type="password")
 
 if api_key:
-    # Initialize the OpenAI LLM with the provided API key
-    llm = ChatOpenAI(
-        api_key=api_key,
-        model="gpt-4o-mini",
-        temperature=0.6)
+    client = genai.Client(api_key=api_key)
 else:
     st.warning("Please enter your API key to start the chatbot.")
 
@@ -47,17 +46,16 @@ if prompt := st.chat_input("Let's say: Hi Celerates!"):
     
     # Display assistant response in chat message container
     with st.chat_message("AI"):
-        response = get_answer(prompt, history, llm)
-        answer = response.content
+        response = get_answer(prompt, history)
+        answer = response.text
         st.markdown(answer)
     st.session_state.messages.append({"role": "AI", "content": answer})
 
     with st.expander("**History Chat:**"):
         st.code(history)
 
-    inp_tkn = response.response_metadata['token_usage']["prompt_tokens"]
-    out_tkn = response.response_metadata['token_usage']["completion_tokens"]
-    total_tkn = response.response_metadata['token_usage']["total_tokens"]
-    model_n = response.response_metadata["model_name"]
+    model = response.model_version
+    prompt_tokens = response.usage_metadata.prompt_token_count
+    completion_tokens = response.usage_metadata.candidates_token_count
     with st.expander("**Usage Details:**"):
-        st.code(f'input token : {inp_tkn}\noutput token : {out_tkn}\ntotal token : {total_tkn}\nmodel : {model_n}')
+        st.code(f'input token : {prompt_tokens}\noutput token : {completion_tokens}\nmodel : {model}')
