@@ -23,12 +23,12 @@ option = st.radio("Choose an option:", ("Upload an Image", "Capture from Camera"
 
 if option == "Upload an Image":
     # File uploader
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg"])
     if uploaded_file is not None:
         # Open the image using PIL
         image = Image.open(uploaded_file)
         # Display the uploaded image
-        # st.image(image, caption='Uploaded Image.', use_column_width=True)
+        st.image(image, caption='Uploaded Image.', use_column_width=True)
         # Convert the image to base64
         base64_string = image_to_base64(image)
 
@@ -59,7 +59,7 @@ if api_key and base64_string:
             messages=[
                 {"role": "user", "content": [
                     {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_string}"}},
-                    {"type": "text", "text": "Extract given image to this format: Transaction Date (format:YYYY-MM-DD), Vendor Name, Address, Total Price Transaction, Transaction Info : (Product Name, Quantity, Price per Unit, Discount)"}
+                    {"type": "text", "text": "Extract given image and write these points: Transaction Date (format:YYYY-MM-DD), Vendor Name, Address, Total Price Transaction, Transaction Info : (Product Name, Quantity, Price per Unit, Discount)"}
                 ]}
             ]
         )
