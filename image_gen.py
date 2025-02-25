@@ -43,10 +43,12 @@ if api_key:
         prompt = prompt_json.text
         images_json = generate_image(prompt, api_key)
         st.write(prompt)
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
             st.image(images_json.generated_images[0].image.image_bytes)
         with col2:
             st.image(images_json.generated_images[1].image.image_bytes)
         with col3:
             st.image(images_json.generated_images[2].image.image_bytes)
+        with col4:
+            st.image(images_json.generated_images[3].image.image_bytes)
