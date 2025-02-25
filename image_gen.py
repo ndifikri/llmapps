@@ -25,7 +25,7 @@ def generate_image(prompt, api_key):
         model='imagen-3.0-generate-002',
         prompt=prompt,
         config=types.GenerateImagesConfig(
-            number_of_images=3,
+            number_of_images=4,
         )
     )
     return response
