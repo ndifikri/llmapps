@@ -13,7 +13,7 @@ Here is user input for the image:
     client = genai.Client(api_key=api_key)
     
     response = client.models.generate_content(
-        model="gemini-2.0-flash-lite-preview-02-05",
+        model="gemini-2.0-flash",
         contents=prompt,
     )
     return response
@@ -26,6 +26,7 @@ def generate_image(prompt, api_key):
         prompt=prompt,
         config=types.GenerateImagesConfig(
             number_of_images=4,
+            aspect_ratio="4:3"
         )
     )
     return response
