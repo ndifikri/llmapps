@@ -31,7 +31,18 @@ def generate_image(prompt, api_key):
     return response
 
 # Set up the Streamlit app
-st.title("Text to Image App")
+st.title("Image Generation App")
+st.image("imagen.png")
+
+homepage_text = '''**Bring your ideas to life with our text-to-image app!**
+
+Simply describe your vision, and our AI will turn your words into stunning images.
+Perfect for artists, designers, or anyone with a creative spark, this tool makes it easy to turn your imagination into reality.
+Create effortlessly and explore endless possibilities!
+'''
+
+with st.container(border=True):
+    st.markdown(homepage_text)
 
 # User input for API key
 api_key = st.text_input("Enter your API Key:", type="password")

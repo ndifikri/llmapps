@@ -35,7 +35,17 @@ Use this history conversation if you need to look at previous conversation conte
     return response
 
 # Set up the Streamlit app
-st.title("Chatbot AI")
+st.title("Chatbot App")
+st.image("chatbot.png")
+
+homepage_text = '''**Welcome to the future of conversation!**
+
+Our **AI chatbot**, powered by cutting-edge **Large Language Model (LLM)** technology, offers a seamless and intelligent interaction experience.
+Whether you're seeking expert knowledge or real-time information from the web, our chatbot delivers accurate, context-aware responses. Engage in natural, human-like conversations and explore a world of information at your fingertips—all in one place.
+Experience the perfect blend of AI intelligence and web-savvy capabilities, designed to enhance your productivity and curiosity.'''
+
+with st.container(border=True):
+    st.markdown(homepage_text)
 
 # User input for API key
 api_key = st.text_input("Enter your API Key:", type="password")

@@ -12,7 +12,18 @@ def image_to_base64(image):
     return base64_encoded
 
 # Streamlit app
-st.title("Image to Base64 Converter")
+st.title("Invoice Extraction App")
+st.image("invoice.png")
+
+homepage_text = '''**Simplify your invoicing process with our smart app!**
+
+Just upload or snap a photo of your invoice, and our AI will automatically extract and organize the data into clear, well-defined fields.
+Save time, reduce errors, and streamline your workflow with this effortless solution.
+Perfect for businesses and individuals alike, this app makes managing invoices quicker and easier than ever.
+'''
+
+with st.container(border=True):
+    st.markdown(homepage_text)
 
 # User input for API key
 api_key = st.text_input("Enter your API Key:", type="password")
