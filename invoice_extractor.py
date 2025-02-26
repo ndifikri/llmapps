@@ -40,7 +40,7 @@ elif option == "Capture from Camera":
         # Open the image using PIL
         image = Image.open(camera_image)
         # Display the captured image
-        st.image(image, caption='Captured Image.', use_column_width=True)
+        st.image(image, caption='Captured Image.', use_container_width=True)
         # Convert the image to base64
         base64_string = image_to_base64(image)
 
