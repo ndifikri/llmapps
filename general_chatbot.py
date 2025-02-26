@@ -1,5 +1,6 @@
 import streamlit as st
 from google import genai
+from google.genai.types import Tool, GenerateContentConfig, GoogleSearch
 
 def get_answer(prompt, history):
     fix_prompt = f"""You are helpful assistant. Your task is answer the question from user.
@@ -13,6 +14,26 @@ Use this history conversation if you need to look at previous conversation conte
     )
     return response
 
+def get_answer_web(prompt, history):
+    fix_prompt = f"""You are helpful assistant. Your task is answer the question from user.
+User: {prompt}
+
+Use this history conversation if you need to look at previous conversation contexts:
+{history}"""
+    google_search_tool = Tool(
+        google_search = GoogleSearch()
+    )
+
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=fix_prompt,
+        config=GenerateContentConfig(
+            tools=[google_search_tool],
+            response_modalities=["TEXT"],
+        )
+    )
+    return response
+
 # Set up the Streamlit app
 st.title("Chatbot AI")
 
@@ -23,6 +44,8 @@ if api_key:
     client = genai.Client(api_key=api_key)
 else:
     st.warning("Please enter your API key to start the chatbot.")
+
+choose_mode = st.radio("Choose Chatbot Capability", ["default knowledge", "search on internet"])
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -46,7 +69,10 @@ if prompt := st.chat_input("Let's say: Hi Celerates!"):
     
     # Display assistant response in chat message container
     with st.chat_message("AI"):
-        response = get_answer(prompt, history)
+        if choose_mode == "default knowledge":
+            response = get_answer(prompt, history)
+        else:
+            response = get_answer_web(prompt, history)
         answer = response.text
         st.markdown(answer)
     st.session_state.messages.append({"role": "AI", "content": answer})
