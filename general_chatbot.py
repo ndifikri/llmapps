@@ -1,17 +1,31 @@
 import streamlit as st
 from google import genai
 from google.genai.types import Tool, GenerateContentConfig, GoogleSearch
+from google.genai import types
+import pathlib, os
 
-def get_answer(prompt, history):
+def get_answer(prompt, history, file=False):
     fix_prompt = f"""You are helpful assistant. Your task is answer the question from user.
 User: {prompt}
 
 Use this history conversation if you need to look at previous conversation contexts:
 {history}"""
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=fix_prompt
-    )
+    if file:
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=[
+                types.Part.from_bytes(
+                    data=filepath.read_bytes(),
+                    mime_type=uploaded_file.type,
+                ),
+                fix_prompt
+            ]
+        )
+    else:
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=fix_prompt
+        )
     return response
 
 def get_answer_web(prompt, history):
@@ -38,6 +52,11 @@ Use this history conversation if you need to look at previous conversation conte
 st.title("Chatbot App")
 st.image("chatbot.png")
 
+temp_folder = pathlib.Path("temp_files")
+for file in temp_folder.iterdir():
+    if file.is_file():
+        os.remove(file)
+
 homepage_text = '''**Welcome to the future of conversation!**
 
 Our **AI chatbot**, powered by cutting-edge **Large Language Model (LLM)** technology, offers a seamless and intelligent interaction experience.
@@ -56,6 +75,15 @@ else:
     st.warning("Please enter your API key to start the chatbot.")
 
 choose_mode = st.radio("Choose Chatbot Capability", ["default knowledge", "search on internet"])
+
+if choose_mode == "default knowledge":
+    uploaded_file = st.file_uploader("Upload a PDF or CSV file", type=["pdf", "csv"])
+
+    if uploaded_file is not None:
+        # Save the uploaded file to a temporary location
+        filepath = temp_folder / uploaded_file.name
+        filepath.write_bytes(uploaded_file.getvalue())
+        st.write(f"Uploaded file: {uploaded_file.name}")
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -80,7 +108,10 @@ if prompt := st.chat_input("Let's say: Hi Celerates!"):
     # Display assistant response in chat message container
     with st.chat_message("AI"):
         if choose_mode == "default knowledge":
-            response = get_answer(prompt, history)
+            if uploaded_file:
+                response = get_answer(prompt, history, file=True)
+            else:
+                response = get_answer(prompt, history, file=False)
         else:
             response = get_answer_web(prompt, history)
         answer = response.text
