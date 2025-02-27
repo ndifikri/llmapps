@@ -52,7 +52,7 @@ Use this history conversation if you need to look at previous conversation conte
 st.title("Chatbot App")
 st.image("chatbot.png")
 
-temp_folder = pathlib.Path("temp_files")
+temp_folder = pathlib.Path("./temp_files")
 for file in temp_folder.iterdir():
     if file.is_file():
         os.remove(file)
