@@ -15,7 +15,7 @@ Use this history conversation if you need to look at previous conversation conte
             model="gemini-2.0-flash",
             contents=[
                 types.Part.from_bytes(
-                    data=filepath.read_bytes(),
+                    data=file_content,
                     mime_type=uploaded_file.type,
                 ),
                 fix_prompt
@@ -52,11 +52,6 @@ Use this history conversation if you need to look at previous conversation conte
 st.title("Chatbot App")
 st.image("chatbot.png")
 
-temp_folder = pathlib.Path("./temp_files")
-for file in temp_folder.iterdir():
-    if file.is_file():
-        os.remove(file)
-
 homepage_text = '''**Welcome to the future of conversation!**
 
 Our **AI chatbot**, powered by cutting-edge **Large Language Model (LLM)** technology, offers a seamless and intelligent interaction experience.
@@ -80,9 +75,7 @@ if choose_mode == "default knowledge":
     uploaded_file = st.file_uploader("Upload a PDF or CSV file", type=["pdf", "csv"])
 
     if uploaded_file is not None:
-        # Save the uploaded file to a temporary location
-        filepath = temp_folder / uploaded_file.name
-        filepath.write_bytes(uploaded_file.getvalue())
+        file_content = uploaded_file.read()
         st.write(f"Uploaded file: {uploaded_file.name}")
 
 # Initialize chat history
