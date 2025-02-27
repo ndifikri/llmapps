@@ -2,3 +2,5 @@ streamlit
 openai
 google-genai
 pillow
+pathlib
+os
