@@ -2,6 +2,7 @@ import streamlit as st
 
 from google import genai
 from google.genai import types
+import base64
 
 def generate_prompt(user_input, api_key):
     prompt = f"""You are a prompt expert. Your task is writing simple text prompt for 'text to image model'.
@@ -30,6 +31,32 @@ def generate_image(prompt, api_key):
         )
     )
     return response
+
+# Function to encode the local image file to Base64
+def get_base64_of_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+# Custom CSS to set the background image
+def set_background_image(image_path):
+    encoded_image = get_base64_of_image(image_path)
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{encoded_image}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Set the background image using a local file path
+background_image_path = "./web_bg.jpg"  # Relative path to the image
+set_background_image(background_image_path)
 
 # Set up the Streamlit app
 st.title("Image Generation App")

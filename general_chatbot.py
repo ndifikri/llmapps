@@ -2,7 +2,7 @@ import streamlit as st
 from google import genai
 from google.genai.types import Tool, GenerateContentConfig, GoogleSearch
 from google.genai import types
-import pathlib, os
+import base64
 
 def get_answer(prompt, history, file=False):
     fix_prompt = f"""You are helpful assistant. Your task is answer the question from user.
@@ -47,6 +47,32 @@ Use this history conversation if you need to look at previous conversation conte
         )
     )
     return response
+
+# Function to encode the local image file to Base64
+def get_base64_of_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+# Custom CSS to set the background image
+def set_background_image(image_path):
+    encoded_image = get_base64_of_image(image_path)
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{encoded_image}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# Set the background image using a local file path
+background_image_path = "./web_bg.jpg"  # Relative path to the image
+set_background_image(background_image_path)
 
 # Set up the Streamlit app
 st.title("Chatbot App")
