@@ -77,9 +77,17 @@ api_key = st.text_input("Enter your API Key:", type="password")
 
 if api_key:
     user_input = st.text_area("Text to analyze",None)
-    if st.button("Submit", type="primary"):
+
+    on = st.toggle("Activate feature")
+    if on:
         prompt_json = generate_prompt(user_input, api_key)
         prompt = prompt_json.text
+    else:
+        prompt = user_input
+    
+    st.write(f"Final Prompt: {prompt}")
+
+    if st.button("Submit", type="primary"):
         images_json = generate_image(prompt, api_key)
         st.write(prompt)
         col1, col2, col3, col4 = st.columns(4)
