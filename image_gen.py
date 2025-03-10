@@ -44,7 +44,7 @@ def set_background_image(image_path):
         f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded_image}");
+            background-image: url("data:image/png;base64,{encoded_image}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -55,7 +55,7 @@ def set_background_image(image_path):
     )
 
 # Set the background image using a local file path
-background_image_path = "./web_bg.jpg"  # Relative path to the image
+background_image_path = "./web_bg.png"  # Relative path to the image
 set_background_image(background_image_path)
 
 # Set up the Streamlit app
@@ -78,14 +78,14 @@ api_key = st.text_input("Enter your API Key:", type="password")
 if api_key:
     user_input = st.text_area("Text to analyze",None)
 
-    on = st.toggle("Activate feature")
+    on = st.toggle("Activate Prompt Support")
     if on:
         prompt_json = generate_prompt(user_input, api_key)
         prompt = prompt_json.text
+        st.write(f"Final Prompt: {prompt}")
     else:
         prompt = user_input
-    
-    st.write(f"Final Prompt: {prompt}")
+        st.write(f"Final Prompt: {prompt}")
 
     if st.button("Submit", type="primary"):
         images_json = generate_image(prompt, api_key)

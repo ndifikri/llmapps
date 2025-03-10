@@ -60,7 +60,7 @@ def set_background_image(image_path):
         f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded_image}");
+            background-image: url("data:image/png;base64,{encoded_image}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -71,7 +71,7 @@ def set_background_image(image_path):
     )
 
 # Set the background image using a local file path
-background_image_path = "./web_bg.jpg"  # Relative path to the image
+background_image_path = "./web_bg.png"  # Relative path to the image
 set_background_image(background_image_path)
 
 # Set up the Streamlit app
