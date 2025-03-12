@@ -65,7 +65,7 @@ if option == "Upload an Image":
         # Open the image using PIL
         image = Image.open(uploaded_file)
         # Display the uploaded image
-        st.image(image, caption='Uploaded Image.', use_column_width=True)
+        st.image(image, caption='Uploaded Image.', use_container_width=True)
         # Convert the image to base64
         base64_string = image_to_base64(image)
 
