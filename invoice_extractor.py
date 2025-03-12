@@ -34,12 +34,12 @@ def set_background_image(image_path):
     )
 
 # Set the background image using a local file path
-background_image_path = "./web_bg.png"  # Relative path to the image
+background_image_path = "./Background Image.png"  # Relative path to the image
 set_background_image(background_image_path)
 
 # Streamlit app
 st.title("Invoice Extraction App")
-st.image("invoice.png")
+st.image("Header.png")
 
 homepage_text = '''**Simplify your invoicing process with our smart app!**
 

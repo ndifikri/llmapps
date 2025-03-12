@@ -55,12 +55,12 @@ def set_background_image(image_path):
     )
 
 # Set the background image using a local file path
-background_image_path = "./web_bg.png"  # Relative path to the image
+background_image_path = "./Background Image.png"  # Relative path to the image
 set_background_image(background_image_path)
 
 # Set up the Streamlit app
 st.title("Image Generation App")
-st.image("imagen.png")
+st.image("Header.png")
 
 homepage_text = '''**Bring your ideas to life with our text-to-image app!**
 

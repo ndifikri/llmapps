@@ -50,7 +50,7 @@ def set_background_image(image_path):
     )
 
 # Set the background image using a local file path
-background_image_path = "./web_bg.png"  # Relative path to the image
+background_image_path = "./Background Image.png"  # Relative path to the image
 set_background_image(background_image_path)
 
 # Your Streamlit app content
