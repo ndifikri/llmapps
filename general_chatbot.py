@@ -71,7 +71,7 @@ def set_background_image(image_path):
     )
 
 # Set the background image using a local file path
-background_image_path = "./Background Image.png"  # Relative path to the image
+background_image_path = "./Background Image-Opacity 30%.png"  # Relative path to the image
 set_background_image(background_image_path)
 
 # Set up the Streamlit app
