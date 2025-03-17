@@ -36,10 +36,10 @@ def set_background_image(image_path):
 
 if theme == "dark":
     background_image_path = "./dark_bg.png"
-    header_image_path = "./dark_wp.png"
+    header_image_path = "./Header.png"
 else:
     background_image_path = "./light_bg.png"
-    header_image_path = "./light_wp.png"
+    header_image_path = "./Header.png"
 
 set_background_image(background_image_path)
 st.title("📄 AI Recruitment App")
