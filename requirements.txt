@@ -7,3 +7,4 @@ st-theme
 langchain-google-genai
 langchain
 langchain-community
+XlsxWriter
