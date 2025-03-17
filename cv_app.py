@@ -10,7 +10,7 @@ import base64, time, io
 
 with st.spinner("Preparing Application", show_time=True):
     theme_json = st_theme()
-    time.sleep(0.5)
+    time.sleep(1)
     theme = theme_json['base']
 
 def get_base64_of_image(image_path):
