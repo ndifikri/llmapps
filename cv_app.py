@@ -81,7 +81,8 @@ Here is job requirements:
 
     class ResponseFormatter(BaseModel):
         score: int = Field(description="Give score from 0 to 100 for how much this candidate suits for AI Engineer role")
-        reason: str = Field(description="Give the reason about match or not AI Engineer role for this candidate")
+        reason: str = Field(description="Give the reason about match or not the candidate with needed role")
+        desc: str = Field(description="Describe the candidate's skills and capability for needed role")
 
     model_with_structure = llm.with_structured_output(ResponseFormatter)
 
@@ -91,11 +92,13 @@ Here is job requirements:
         prompt_tokens = cb.prompt_tokens
         score = structured_response.score
         reason = structured_response.reason
+        desc = structured_response.desc
         price = 16_500 * (prompt_tokens*0.1 + completion_tokens*0.4)/1_000_000
 
     response = {
         "score" : score,
         "reason" : reason,
+        "desc" : desc,
         "completion_tokens" : completion_tokens,
         "prompt_tokens" : prompt_tokens,
         "price_idr" : price
@@ -137,7 +140,7 @@ if uploaded_req:
                 st.write(result)
             
             data = pd.DataFrame(
-                result_list, columns=["score", "reason", "completion_tokens", "prompt_tokens", "price_idr", "filename"]
+                result_list, columns=["score", "reason", "desc", "completion_tokens", "prompt_tokens", "price_idr", "filename"]
             )            
 
             output = io.BytesIO()
