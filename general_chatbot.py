@@ -115,7 +115,7 @@ for message in st.session_state.messages:
 
 # Accept user input
 if prompt := st.chat_input("Let's say: Hi Celerates!"):
-    messages_history = st.session_state.get("messages", [])[-10:]
+    messages_history = st.session_state.get("messages", [])[-20:]
     history = "\n".join([f'{msg["role"]}: {msg["content"]}' for msg in messages_history]) or " "
 
     # Display user message in chat message container

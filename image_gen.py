@@ -60,7 +60,7 @@ set_background_image(background_image_path)
 
 # Set up the Streamlit app
 st.title("Image Generation App")
-st.image("Header.png")
+# st.image("Header.png")
 
 homepage_text = '''**Bring your ideas to life with our text-to-image app!**
 
