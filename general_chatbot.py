@@ -76,7 +76,7 @@ set_background_image(background_image_path)
 
 # Set up the Streamlit app
 st.title("Chatbot App")
-st.image("Header.png")
+# st.image("Header.png")
 
 homepage_text = '''**Welcome to the future of conversation!**
 
