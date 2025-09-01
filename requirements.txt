@@ -8,3 +8,9 @@ langchain-google-genai
 langchain
 langchain-community
 XlsxWriter
+langchain-openai
+langchain-qdrant
+langgraph
+openai
+pandas
+qdrant-client
