@@ -12,9 +12,9 @@ from langgraph.prebuilt import create_react_agent
 load_dotenv()
 
 # Mengakses variabel dari file .env
-QDRANT_URL = os.getenv("QDRANT_URL")
-QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+QDRANT_URL = st.secrets.get("QDRANT_URL") or os.getenv("QDRANT_URL")
+QDRANT_API_KEY = st.secrets.get("QDRANT_API_KEY") or os.getenv("QDRANT_API_KEY")
+OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
